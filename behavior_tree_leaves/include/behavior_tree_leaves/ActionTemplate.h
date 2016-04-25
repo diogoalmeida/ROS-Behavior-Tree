@@ -30,6 +30,7 @@ public:
 
   // Code to execute if action gets preempted
   virtual void preemptionRoutine() = 0;
-  // Code to be run under normal execution
+  // Code to be run under normal execution. Should return 1 for SUCCESS or -1
+  // for FAILURE
   virtual int executionRoutine() = 0;
 };

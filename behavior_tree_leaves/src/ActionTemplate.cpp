@@ -28,6 +28,10 @@ void ActionTemplate::executeCB(const behavior_tree_core::BTGoalConstPtr &goal) {
       break;
     }
 
+    if (success == 1 || success == -1) {
+      break;
+    }
+
     r.sleep();
   }
 }

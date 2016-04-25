@@ -66,7 +66,7 @@ add_dependencies(
 
 )
 
-add_executable(ActionExample src/ActionExample.cpp)
+add_executable(ActionExample src/ActionExample.cpp src/ActionTemplate.cpp)
 
 target_link_libraries(
   ActionExample
