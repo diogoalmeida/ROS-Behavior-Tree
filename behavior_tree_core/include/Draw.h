@@ -8,7 +8,10 @@
 #include <string>
 #include <ControlNode.h>
 // enum node { SEQUENCE, SELECTOR, PARALLEL,ACTION,CONDITION,ROOT };
+#ifndef __BT_STATUS__
+#define __BT_STATUS__
 enum status { SUCCESS, FAILURE, RUNNING, IDLE };
+#endif
 // enum Node {PARALLEL, SELECTOR, SEQUENCE, SEQUENCESTAR, SELECTORSTAR, ACTION,
 // CONDITION};
 void drawTree(BT::ControlNode *tree_);

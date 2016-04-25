@@ -1,8 +1,13 @@
+#ifndef __CONDITION_TEMPLATE__
+#define __CONDITION_TEMPLATE__
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h> //actionlib
 #include <behavior_tree_core/BTAction.h>
 
-enum Status { RUNNING, SUCCESS, FAILURE };
+#ifndef __BT_STATUS__
+#define __BT_STATUS__
+enum Status { RUNNING, SUCCESS, FAILURE }; // BT return status
+#endif
 
 class ConditionTemplate {
 protected:
@@ -29,3 +34,4 @@ public:
   // This should return true or false quickly!
   virtual bool conditionEvaluation() = 0;
 };
+#endif

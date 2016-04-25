@@ -1,8 +1,13 @@
+#ifndef __ACTION_TEMPLATE__
+#define __ACTION_TEMPLATE__
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h> // needed for actionlib
 #include <behavior_tree_core/BTAction.h>
 
+#ifndef __BT_STATUS__
+#define __BT_STATUS__
 enum Status { RUNNING, SUCCESS, FAILURE }; // BT return status
+#endif
 
 class ActionTemplate {
 protected:
@@ -40,3 +45,4 @@ public:
   // for FAILURE
   virtual int executionRoutine() = 0;
 };
+#endif
