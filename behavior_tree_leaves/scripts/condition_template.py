@@ -19,7 +19,7 @@ class BTAction(object):
     self._action_name = name
     self._as = actionlib.SimpleActionServer(self._action_name, behavior_tree_leaves.msg.BTAction, execute_cb=self.execute_cb, auto_start = False)
     self._as.start()
-    
+
   def execute_cb(self, goal):
     # publish info to the console for the user
     rospy.loginfo('Checking Condition')
@@ -31,7 +31,7 @@ class BTAction(object):
         #IF THE CONDITION IS FALSE
         self.set_status('FAILURE')
 
-    	
+
 
   def set_status(self,status):
       if status == 'SUCCESS':

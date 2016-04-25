@@ -6,15 +6,10 @@ LeafNode::LeafNode(std::string Name) : TreeNode(Name) {}
 
 LeafNode::~LeafNode() {}
 
+void LeafNode::ResetColorState() {
+  // Lock acquistion
 
-void LeafNode::ResetColorState()
-{
-    // Lock acquistion
-
-    ColorState = Idle;
+  ColorState = Idle;
 }
 
-int LeafNode::GetDepth()
-{
-    return 0;
-}
+int LeafNode::GetDepth() { return 0; }

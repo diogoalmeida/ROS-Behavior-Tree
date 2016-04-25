@@ -3,17 +3,17 @@
 
 #include <boost/thread.hpp>
 
-class NodeSemaphore
-{
+class NodeSemaphore {
 private:
-    int Value;
-    boost::mutex Mutex;
-    boost::condition_variable ConditionVariable;
+  int Value;
+  boost::mutex Mutex;
+  boost::condition_variable ConditionVariable;
+
 public:
-    NodeSemaphore(int InitialValue);
-    ~NodeSemaphore();
-	void Wait();
-	void Signal();
+  NodeSemaphore(int InitialValue);
+  ~NodeSemaphore();
+  void Wait();
+  void Signal();
 };
 
 #endif

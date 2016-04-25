@@ -19,17 +19,17 @@ class BTAction(object):
     self._action_name = name
     self._as = actionlib.SimpleActionServer(self._action_name, behavior_tree_core.msg.BTAction, execute_cb=self.execute_cb, auto_start = False)
     self._as.start()
-    
+
   def execute_cb(self, goal):
     # helper variables
     r = rospy.Rate(1)
     success = True
-    
 
-    
+
+
     # publish info to the console for the user
     rospy.loginfo('Starting Action')
-    
+
     # start executing the action
     for i in xrange(1, 5):
       # check that preempt has not been requested by the client
@@ -43,11 +43,11 @@ class BTAction(object):
 
       # this step is not necessary, the sequence is computed at 1 Hz for demonstration purposes
       r.sleep()
-      
+
     if success:
       self.set_status('FAILURE')
 
-    
+
 
   def set_status(self,status):
       if status == 'SUCCESS':

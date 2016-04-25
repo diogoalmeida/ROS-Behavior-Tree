@@ -19,11 +19,11 @@ class BTAction(object):
     self._action_name = name
     self._as = actionlib.SimpleActionServer(self._action_name, behavior_tree_core.msg.BTAction, execute_cb=self.execute_cb, auto_start = False)
     self._as.start()
-    
+
 		  def execute_cb(self, goal):
 		    # publish info to the console for the user
 		    rospy.loginfo('Starting Action')
-		    
+
 		    # start executing the action
 		    while #your condition:
 		      # check that preempt has not been requested by the client
@@ -34,15 +34,15 @@ class BTAction(object):
 			success = False
 			break
 
-		      rospy.loginfo('Executing Action')      
+		      rospy.loginfo('Executing Action')
 		      #HERE THE CODE TO EXECUTE AS LONG AS THE BEHAVIOR TREE DOES NOT HALT THE ACTION
-		      
+
 		      #IF THE ACTION HAS SUCCEEDED
 		      self.set_status('SUCCESS')
 		      #IF THE ACTION HAS FAILED
 		      self.set_status('FAILURE')
 
-    	
+
 
   def set_status(self,status):
       if status == 'SUCCESS':
