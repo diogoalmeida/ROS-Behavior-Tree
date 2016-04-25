@@ -80,7 +80,7 @@ add_dependencies(
   behavior_tree_core_generate_messages_cpp
 )
 
-add_executable(ConditionExample src/ConditionExample.cpp)
+add_executable(ConditionExample src/ConditionExample.cpp src/ConditionTemplate.cpp)
 
 target_link_libraries(
   ConditionExample

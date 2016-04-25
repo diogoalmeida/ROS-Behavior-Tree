@@ -32,6 +32,7 @@ void ActionTemplate::executeCB(const behavior_tree_core::BTGoalConstPtr &goal) {
       break;
     }
 
+    ROS_INFO("Sleepz");
     r.sleep();
   }
 }

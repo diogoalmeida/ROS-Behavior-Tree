@@ -3,7 +3,7 @@
 
 class BTAction : ActionTemplate {
 public:
-  BTAction(std::string name) : ActionTemplate(name) {}
+  BTAction(std::string name) : ActionTemplate(name), count_(0) {}
   ~BTAction() {}
 
   void preemptionRoutine() {
@@ -11,28 +11,16 @@ public:
   }
 
   int executionRoutine() {
-    ROS_INFO("Insert 0 to fail, otherwise, succeed");
-    std::string input;
-    char key;
-    getline(std::cin, input);
+    count_++;
 
-    if (input.length() == 1) {
-      key = input[0];
-    } else {
-      key = '1';
-    }
-
-    switch (key) {
-    case '0':
-      ROS_INFO("Action %s failed", action_name_.c_str());
-      return -1;
-    default:
-      ROS_INFO("Action %s is being executed successfully",
-               action_name_.c_str());
+    if (count_ % 4 == 0) {
       return 1;
-      break;
     }
+    return -1;
   }
+
+private:
+  int count_;
 };
 
 int main(int argc, char **argv) {

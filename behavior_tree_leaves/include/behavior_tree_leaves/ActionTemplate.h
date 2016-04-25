@@ -21,6 +21,12 @@ public:
         action_name_(name) {
     // Starts the action server
     action_server_.start();
+
+    if (nh_.hasParam("/behavior_tree/execution_frequency")) {
+      nh_.getParam("/behavior_tree/execution_frequency", execution_frequency_);
+    } else {
+      execution_frequency_ = 1.0;
+    }
   }
 
   ~ActionTemplate() {}
