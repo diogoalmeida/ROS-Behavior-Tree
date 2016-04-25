@@ -22,8 +22,12 @@ find_package(Boost REQUIRED COMPONENTS system thread program_options)
 # Settings
 add_definitions(-Wall -g -O0 -Wno-deprecated -static -Bstatic -std=gnu++0x)
 
+link_directories(${catkin_LIBRARY_DIRS})
+
 catkin_package(
   CATKIN_DEPENDS actionlib_msgs
+  INCLUDE_DIRS include
+  LIBRARIES ActionTemplate ConditionTemplate
 )
 
 include_directories(
@@ -35,7 +39,6 @@ set(COMMON_LIB ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 add_library(ActionTemplate src/ActionTemplate.cpp)
 target_link_libraries(ActionTemplate ${catkin_LIBRARIES})
-add_dependencies(ActionTemplate ${behavior_tree_leaves_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp behavior_tree_core_generate_messages_cpp)
 
 add_executable(ActionClient src/ActionClient.cpp)
 
@@ -64,6 +67,12 @@ add_dependencies(
   ${PROJECT_NAME}_generate_messages_cpp
   behavior_tree_core_generate_messages_cpp
 
+)
+
+add_library(ConditionTemplate src/ConditionTemplate.cpp)
+target_link_libraries(
+  ConditionTemplate
+  ${catkin_LIBRARIES}
 )
 
 add_executable(ActionExample src/ActionExample.cpp src/ActionTemplate.cpp)
