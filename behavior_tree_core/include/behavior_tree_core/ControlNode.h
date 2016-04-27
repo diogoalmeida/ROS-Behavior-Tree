@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include <TreeNode.h>
+#include <behavior_tree_core/TreeNode.h>
 
 namespace BT {
 class ControlNode : public TreeNode {

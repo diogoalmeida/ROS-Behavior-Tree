@@ -8,33 +8,34 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  roslaunch
   genmsg
-
 )
 
 add_action_files(
-  DIRECTORY action
-  FILES BT.action
+DIRECTORY action
+FILES BT.action
 )
 
 generate_messages(
-  DEPENDENCIES actionlib_msgs std_msgs # Or other packages containing msgs
+DEPENDENCIES actionlib_msgs std_msgs
+)
+
+include_directories(
+include
+${catkin_INCLUDE_DIRS}
+)
+
+catkin_package(
+	DEPENDS GLUT OpenGL
+	CATKIN_DEPENDS actionlib_msgs roscpp
+	LIBRARIES behavior_tree
+	INCLUDE_DIRS include
 )
 
 add_definitions(-Wall -lglut -lGL)
 
 link_directories(${catkin_LIBRARY_DIRS})
-catkin_package(
-  CATKIN_DEPENDS actionlib_msgs
-  LIBRARIES behavior_tree ros_action
-  INCLUDE_DIRS include
-)
 
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-)
 
 #########################################################
 # FIND GLUT
@@ -58,12 +59,12 @@ if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")
 endif(NOT OPENGL_FOUND)
 
-file(GLOB_RECURSE BTHeadLibrary include/*.h)
+file(GLOB_RECURSE BTHeadLibrary include/behavior_tree_core/*.h)
 
 set(BTSrcLibrary
 src/ActionNode.cpp
-src/ConditionNode.cpp
 src/ControlNode.cpp
+src/ConditionNode.cpp
 src/DecoratorRetryNode.cpp
 src/DecoratorNegationNode.cpp
 src/Draw.cpp
@@ -72,24 +73,21 @@ src/LeafNode.cpp
 src/NodeSemaphore.cpp
 src/ParallelNode.cpp
 src/SelectorNode.cpp
-src/SequenceNode.cpp
 src/SelectorStarNode.cpp
 src/SequenceStarNode.cpp
 src/TreeNode.cpp
+src/SequenceNode.cpp
 src/Actions/ActionTestNode.cpp
+src/Actions/ROSAction.cpp
 src/Conditions/ConditionTestNode.cpp
 src/Conditions/ROSCondition.cpp
+src/BehaviorTree.cpp
 )
 
-add_library(ros_action src/Actions/ROSAction.cpp ${BTSrcLibrary} ${BTHeadLibrary})
-target_link_libraries(ros_action ${catkin_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
-add_dependencies(ros_action behavior_tree_core_generate_messages_cpp)
-
-add_library(behavior_tree src/BehaviorTree.cpp)
+add_library(behavior_tree ${BTSrcLibrary} ${BTHeadLibrary})
 target_link_libraries(behavior_tree ${catkin_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
 add_dependencies(behavior_tree behavior_tree_core_generate_messages_cpp)
 
-install(DIRECTORY include/
+install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
   PATTERN ".svn" EXCLUDE)

@@ -1,4 +1,4 @@
-#include <TreeNode.h>
+#include <behavior_tree_core/TreeNode.h>
 
 using namespace BT;
 

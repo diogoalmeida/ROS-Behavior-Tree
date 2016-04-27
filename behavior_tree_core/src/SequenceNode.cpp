@@ -1,4 +1,4 @@
-#include <SequenceNode.h>
+#include <behavior_tree_core/SequenceNode.h>
 
 using namespace BT;
 
@@ -17,6 +17,7 @@ void SequenceNode::Exec() {
 
   // Vector size initialization
   M = ChildNodes.size();
+  std::cout << Name << " has " << M << " children" << std::endl;
 
   // Simulating a tick for myself
   Semaphore.Signal();
@@ -26,7 +27,7 @@ void SequenceNode::Exec() {
     Semaphore.Wait();
 
     if (ReadState() == Exit) {
-      // The behavior tree is going to be destroied
+      // The behavior tree is going to be destroyed
       return;
     }
 
@@ -40,22 +41,36 @@ void SequenceNode::Exec() {
         if (ChildNodes[i]->Type == Action) {
           // 1) if it's an action:
           // 1.1) read its state;
+          std::cout << "Reading child " << ChildNodes[i]->Name << std::endl;
           NodeState ActionState = ChildNodes[i]->ReadState();
 
           if (ActionState == Idle) {
             // 1.2) if it's "Idle":
             // 1.2.1) ticking it;
+            std::cout << "Child " << ChildNodes[i]->Name << " is Idle"
+                      << std::endl;
             ChildNodes[i]->Semaphore.Signal();
 
-            // 1.2.2) retrive its state as soon as it is available;
+            // 1.2.2) retrieve its state as soon as it is available;
             ChildStates[i] = ChildNodes[i]->GetNodeState();
           } else if (ActionState == Running) {
             // 1.3) if it's "Running":
             // 1.3.1) saving "Running"
             ChildStates[i] = Running;
+            std::cout << "Child " << ChildNodes[i]->Name << " returned RUNNING"
+                      << std::endl;
           } else {
             // 1.4) if it's "Success" of "Failure" (it can't be "Halted"!):
             // 1.2.1) ticking it;
+
+            if (ActionState == Success) {
+              std::cout << "Child " << ChildNodes[i]->Name
+                        << " returned SUCCESS" << std::endl;
+            } else if (ActionState == Failure) {
+              std::cout << "Child " << ChildNodes[i]->Name
+                        << " returned FAILURE" << std::endl;
+            }
+
             ChildNodes[i]->Semaphore.Signal();
 
             // 1.2.2) saving the read state;
@@ -64,6 +79,7 @@ void SequenceNode::Exec() {
         } else {
           // 2) if it's not an action:
           // 2.1) ticking it;
+          std::cout << Name << " Ticking a control node!" << std::endl;
           ChildNodes[i]->Semaphore.Signal();
 
           // 2.2) retrive its state as soon as it is available;
@@ -132,8 +148,7 @@ void SequenceNode::Exec() {
            }*/
           HaltChildren(i + 1);
 
-          std::cout << Name << " returning " << ChildStates[i] << "!"
-                    << std::endl;
+          std::cout << Name << " returning Idle!" << std::endl;
 
           // 3.4) the "for" loop must end here.
           break;
@@ -148,7 +163,7 @@ void SequenceNode::Exec() {
         // 4.2) resetting the state;
         WriteState(Idle);
 
-        std::cout << Name << " returning " << Success << "!" << std::endl;
+        std::cout << Name << " returning Success!" << std::endl;
       }
     } else {
       // If it was halted, all the "busy" children must be halted too

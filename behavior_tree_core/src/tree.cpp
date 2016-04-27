@@ -1,4 +1,4 @@
-#include "BehaviorTree.h"
+#include "behavior_tree_core/BehaviorTree.h"
 
 using namespace BT;
 

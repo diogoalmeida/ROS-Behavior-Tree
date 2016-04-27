@@ -1,7 +1,7 @@
 #ifndef DECORATORNEGATIONNODE_H
 #define DECORATORNEGATIONNODE_H
 
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 
 namespace BT {
 class DecoratorNegationNode : public ControlNode {

@@ -1,7 +1,7 @@
 #ifndef SELECTORNODE_H
 #define SELECTORNODE_H
 
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 
 namespace BT {
 class SelectorNode : public ControlNode {

@@ -2,7 +2,7 @@
 
 void ActionTemplate::executeCB(const behavior_tree_core::BTGoalConstPtr &goal) {
   ros::Rate r(execution_frequency_);
-  ROS_INFO("Starting Action");
+  ROS_INFO("Starting Action: %s", action_name_.c_str());
 
   while (ros::ok()) {
     // check that preempt has not been requested by the client
@@ -12,11 +12,10 @@ void ActionTemplate::executeCB(const behavior_tree_core::BTGoalConstPtr &goal) {
       preemptionRoutine();
       // set the action state to preempted
       action_server_.setPreempted();
-      setStatus(FAILURE);
       break;
     }
 
-    ROS_INFO("Executing Action");
+    ROS_WARN("Executing Action: %s", action_name_.c_str());
     int success = executionRoutine();
 
     switch (success) {
@@ -32,7 +31,6 @@ void ActionTemplate::executeCB(const behavior_tree_core::BTGoalConstPtr &goal) {
       break;
     }
 
-    ROS_INFO("Sleepz");
     r.sleep();
   }
 }
@@ -50,7 +48,7 @@ void ActionTemplate::setStatus(int status) {
 
   switch (status) { // Print for convenience
   case SUCCESS:
-    ROS_INFO("Action %s Succeeded", ros::this_node::getName().c_str());
+    ROS_WARN("Action %s Succeeded", ros::this_node::getName().c_str());
     break;
   case FAILURE:
     ROS_INFO("Action %s Failed", ros::this_node::getName().c_str());

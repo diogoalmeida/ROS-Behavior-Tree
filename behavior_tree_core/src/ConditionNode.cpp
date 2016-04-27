@@ -1,4 +1,4 @@
-#include <ConditionNode.h>
+#include <behavior_tree_core/ConditionNode.h>
 
 using namespace BT;
 

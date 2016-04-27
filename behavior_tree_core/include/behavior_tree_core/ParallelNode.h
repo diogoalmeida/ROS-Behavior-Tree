@@ -1,7 +1,7 @@
 #ifndef PARALLELNODE_H
 #define PARALLELNODE_H
 
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 
 #include <limits>
 

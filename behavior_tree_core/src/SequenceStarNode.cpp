@@ -1,4 +1,4 @@
-#include <SequenceStarNode.h>
+#include <behavior_tree_core/SequenceStarNode.h>
 
 using namespace BT;
 

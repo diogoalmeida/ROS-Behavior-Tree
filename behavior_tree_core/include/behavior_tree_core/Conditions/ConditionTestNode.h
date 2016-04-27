@@ -1,7 +1,7 @@
 #ifndef CONDITIONTEST_H
 #define CONDITIONTEST_H
 
-#include <ConditionNode.h>
+#include <behavior_tree_core/ConditionNode.h>
 
 namespace BT {
 class ConditionTestNode : public ConditionNode {

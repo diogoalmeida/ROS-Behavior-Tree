@@ -1,4 +1,4 @@
-#include <DecoratorNegationNode.h>
+#include <behavior_tree_core/DecoratorNegationNode.h>
 
 using namespace BT;
 

@@ -6,7 +6,7 @@
 #include <math.h>
 #include <iostream>
 #include <string>
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 // enum node { SEQUENCE, SELECTOR, PARALLEL,ACTION,CONDITION,ROOT };
 #ifndef __BT_STATUS__
 #define __BT_STATUS__

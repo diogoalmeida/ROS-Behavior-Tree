@@ -1,4 +1,4 @@
-#include <NodeSemaphore.h>
+#include <behavior_tree_core/NodeSemaphore.h>
 
 NodeSemaphore::NodeSemaphore(int InitialValue) { Value = InitialValue; }
 

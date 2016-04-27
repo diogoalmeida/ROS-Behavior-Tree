@@ -8,8 +8,8 @@
 #include <boost/thread.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include <NodeSemaphore.h>
-#include <Exceptions.h>
+#include <behavior_tree_core/NodeSemaphore.h>
+#include <behavior_tree_core/Exceptions.h>
 
 namespace BT {
 // Enumerates the possible types of a node:

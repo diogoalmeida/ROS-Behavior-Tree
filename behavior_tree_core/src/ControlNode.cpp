@@ -1,4 +1,4 @@
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 
 using namespace BT;
 

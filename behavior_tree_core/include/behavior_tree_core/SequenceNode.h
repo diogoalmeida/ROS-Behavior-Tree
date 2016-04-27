@@ -1,7 +1,7 @@
 #ifndef SEQUENCENODE_H
 #define SEQUENCENODE_H
 
-#include <ControlNode.h>
+#include <behavior_tree_core/ControlNode.h>
 
 namespace BT {
 class SequenceNode : public ControlNode {

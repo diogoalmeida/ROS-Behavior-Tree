@@ -1,4 +1,4 @@
-#include <ParallelNode.h>
+#include <behavior_tree_core/ParallelNode.h>
 
 using namespace BT;
 

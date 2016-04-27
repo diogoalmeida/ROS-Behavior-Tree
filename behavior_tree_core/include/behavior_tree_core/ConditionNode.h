@@ -1,21 +1,20 @@
-#ifndef ACTIONNODE_H
-#define ACTIONNODE_H
+#ifndef CONDITIONNODE_H
+#define CONDITIONNODE_H
 
-#include "LeafNode.h"
+#include "behavior_tree_core/LeafNode.h"
 
 namespace BT {
-
-class ActionNode : public LeafNode {
+class ConditionNode : public LeafNode {
 public:
   // Constructor
-  ActionNode(std::string Name);
-  ~ActionNode();
+  ConditionNode(std::string Name);
+  ~ConditionNode();
 
   // The method that is going to be executed by the thread
   virtual void Exec() = 0;
 
   // The method used to interrupt the execution of the node
-  virtual bool Halt() = 0;
+  bool Halt();
 
   // Methods used to access the node state without the
   // conditional waiting (only mutual access)

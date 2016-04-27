@@ -1,7 +1,7 @@
 #ifndef ROSCONDITION_H
 #define ROSCONDITION_H
 
-#include <ConditionNode.h>
+#include <behavior_tree_core/ConditionNode.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <behavior_tree_core/BTAction.h>

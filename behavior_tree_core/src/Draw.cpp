@@ -1,4 +1,4 @@
-#include <Draw.h>
+#include <behavior_tree_core/Draw.h>
 
 using namespace BT;
 ControlNode *tree;
@@ -243,7 +243,7 @@ void drawTree(ControlNode *tree_) {
   glClearColor(0, 0.71, 0.00, 0.1);
   glutDisplayFunc(display); // Register display callback
 
-  glutKeyboardFunc(keyboard); // Register keyboard callback
+  glutKeyboardFunc(keyboard);          // Register keyboard callback
   glutSpecialFunc(processSpecialKeys); // Register keyboard arrow callback
 
   glutMainLoop(); // Enter main event loop

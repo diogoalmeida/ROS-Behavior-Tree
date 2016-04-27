@@ -1,7 +1,7 @@
 #ifndef ACTIONTEST_H
 #define ACTIONTEST_H
 
-#include <ActionNode.h>
+#include <behavior_tree_core/ActionNode.h>
 
 namespace BT {
 class ActionTestNode : public ActionNode {
