@@ -27,7 +27,7 @@ add_definitions(-Wall -lglut -lGL)
 link_directories(${catkin_LIBRARY_DIRS})
 catkin_package(
   CATKIN_DEPENDS actionlib_msgs
-  LIBRARIES behavior_tree
+  LIBRARIES behavior_tree ros_action
   INCLUDE_DIRS include
 )
 
@@ -78,17 +78,16 @@ src/SequenceStarNode.cpp
 src/TreeNode.cpp
 src/Actions/ActionTestNode.cpp
 src/Conditions/ConditionTestNode.cpp
-src/Actions/ROSAction.cpp
 src/Conditions/ROSCondition.cpp
 )
+
+add_library(ros_action src/Actions/ROSAction.cpp ${BTSrcLibrary} ${BTHeadLibrary})
+target_link_libraries(ros_action ${catkin_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
+add_dependencies(ros_action behavior_tree_core_generate_messages_cpp)
 
 add_library(behavior_tree src/BehaviorTree.cpp)
 target_link_libraries(behavior_tree ${catkin_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
 add_dependencies(behavior_tree behavior_tree_core_generate_messages_cpp)
-
-add_executable(tree src/tree.cpp ${BTSrcLibrary} ${BTHeadLibrary})
-target_link_libraries(tree ${catkin_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
-add_dependencies(tree behavior_tree_core_generate_messages_cpp)
 
 install(DIRECTORY include/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
