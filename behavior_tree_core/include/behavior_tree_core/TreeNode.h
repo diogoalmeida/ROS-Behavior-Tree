@@ -11,6 +11,8 @@
 #include <behavior_tree_core/NodeSemaphore.h>
 #include <behavior_tree_core/Exceptions.h>
 
+#include <exception>
+
 namespace BT {
 // Enumerates the possible types of a node:
 // - "Parallel" indicates that this node and its predecessor are children
@@ -97,6 +99,9 @@ public:
 
   // The method used to interrupt the execution of the node
   virtual bool Halt() = 0;
+
+  // The method used to fill the child vector
+  virtual void AddChild(TreeNode *Child);
 
   // The method that retrive the state of the node
   // (conditional waiting and mutual access)

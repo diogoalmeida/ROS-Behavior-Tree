@@ -11,6 +11,14 @@ TreeNode::TreeNode(std::string Name) : Semaphore(0) {
 
 TreeNode::~TreeNode() {}
 
+void TreeNode::AddChild(TreeNode *Child) {
+  std::string error_msg;
+
+  error_msg = "Called method <AddChild> from a BT node (" + Name +
+              ")that is a leaf node!";
+  throw std::logic_error(error_msg);
+}
+
 NodeState TreeNode::GetNodeState() {
   NodeState ReadState;
   // Lock acquistion
