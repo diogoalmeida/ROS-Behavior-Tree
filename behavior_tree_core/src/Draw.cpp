@@ -25,8 +25,11 @@ void draw_node(float x, float y, int node_type, const char *leafName,
                int status) {
   void *font = GLUT_BITMAP_8_BY_13;
 
-  float NODE_WIDTH = 0.02;
+  float NODE_WIDTH = 0.03;
   float NODE_HEIGHT = 0.02;
+
+  std::string st(leafName, 0, 6);
+
   switch (node_type) {
   case BT::SELECTORSTAR:
     drawString(font, "?*", (x + NODE_WIDTH - 0.035), (y - NODE_HEIGHT / 2), 0);
@@ -48,23 +51,21 @@ void draw_node(float x, float y, int node_type, const char *leafName,
     drawString(font, "D", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
     break;
   case BT::ACTION: {
-    std::string st(leafName, 0, 15);
-    NODE_WIDTH = 0.01;
+    NODE_WIDTH = 0.02;
     for (unsigned int i = 0; i < st.size(); i++)
       NODE_WIDTH += 0.01;
   }
     renderBitmapString((x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), font,
-                       leafName);
+                       st.c_str());
     glColor3f(0.2, 1.0, 0.2);
     break;
   case BT::CONDITION: {
-    std::string st(leafName, 0, 15);
-    NODE_WIDTH = 0.01;
+    NODE_WIDTH = 0.02;
     for (unsigned int i = 0; i < st.size(); i++)
       NODE_WIDTH += 0.01;
   }
     renderBitmapString((x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), font,
-                       leafName);
+                       st.c_str());
     break;
   default:
     break;
@@ -136,7 +137,7 @@ void drawCircle(float radius) {
 
 float x = 0.0;
 float y = 0.4;
-float x_offset = 0.1;
+float x_offset = 0.04;
 float r_color = 1;
 float g_color = 1;
 float b_color = 1;
@@ -171,7 +172,7 @@ void display() {
 
   // clear the draw buffer .
   glClear(GL_COLOR_BUFFER_BIT); // Erase everything
-  updateTree(tree, x, y, x_offset * pow(2, depth - 1), 0.1);
+  updateTree(tree, x, y, x_offset * pow(4, depth - 1), 0.1);
   glutSwapBuffers();
   glutPostRedisplay();
 }
