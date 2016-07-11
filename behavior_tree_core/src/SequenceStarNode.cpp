@@ -95,6 +95,8 @@ void SequenceStarNode::Exec() {
                                               // the next child
         {
           i++;
+
+          std::cout << Name << " can now tick the next children :) " << std::endl;
         }
       }
 

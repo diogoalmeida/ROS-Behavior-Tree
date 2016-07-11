@@ -146,10 +146,13 @@ void SequenceNode::Exec() {
                    ChildNodes[j]->Semaphore.Signal();
                }
            }*/
-          HaltChildren(i + 1);
 
-          std::cout << Name << " returning Idle!" << std::endl;
+          if (ChildStates[i] == Failure)
+          {
+              HaltChildren(i + 1);
 
+              std::cout << Name << " had a child failure! returning Idle!" << std::endl;
+          }
           // 3.4) the "for" loop must end here.
           break;
         }

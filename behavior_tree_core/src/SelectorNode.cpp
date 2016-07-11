@@ -70,7 +70,7 @@ void SelectorNode::Exec() {
           ChildStates[i] = ChildNodes[i]->GetNodeState();
         }
 
-        // 3) if the child state is not a success:
+        // 3) if the child state is not a failure:
         if (ChildStates[i] != Failure) {
           // 3.1) the node state is equal to it;
           SetNodeState(ChildStates[i]);
@@ -129,9 +129,12 @@ void SelectorNode::Exec() {
                }
            }
 */
-          HaltChildren(i + 1);
-          std::cout << Name << " returning " << ChildStates[i] << "!"
-                    << std::endl;
+          if (ChildStates[i] == Success)
+          {
+              HaltChildren(i + 1);
+
+              std::cout << Name << " had a child success! returning Idle!" << std::endl;
+          }
 
           // 3.4) the "for" loop must end here.
           break;
