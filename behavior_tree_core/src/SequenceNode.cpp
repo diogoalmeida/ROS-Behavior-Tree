@@ -95,58 +95,6 @@ void SequenceNode::Exec() {
           WriteState(Idle);
 
           // 3.3) all the next action or control child nodes must be halted:
-          /* for(unsigned int j=i+1; j<M; j++)
-           {
-               if (ChildNodes[j]->Type != Action && ChildStates[j] == Running)
-               {
-                   // 3.3.1) if the control node was running:
-                   // 3.3.1.1) halting it;
-                   ChildNodes[j]->Halt();
-
-                   // 3.3.1.2) sync with it (it's waiting on the semaphore);
-                   ChildNodes[j]->Semaphore.Signal();
-
-                   // 3.3.1.3) updating its vector cell
-                   ChildStates[j] = Idle;
-
-                   std::cout << Name << " halting child number " << j << "!" <<
-           std::endl;
-               }
-               else if (ChildNodes[j]->Type == Action &&
-           ChildNodes[j]->ReadState() == Running)
-               {
-                   std::cout << Name << " trying halting child number " << j <<
-           "..." << std::endl;
-
-                   // 3.3.2) if it's a action node that hasn't finished its job:
-                   // 3.3.2.1) trying to halt it:
-                   if (ChildNodes[j]->Halt() == false)
-                   {
-                       // 3.3.2.1.1) this means that, before this node could set
-           its child state
-                       //            to "Halted", the child had already written
-           the action outcome;
-                       //            sync with him ignoring its state;
-                       ChildNodes[j]->Semaphore.Signal();
-
-                       std::cout << Name << " halting of child number " << j <<
-           " failed!" << std::endl;
-                   }
-                   else
-                   {
-                       std::cout << Name << " halting of child number " << j <<
-           " succedeed!" << std::endl;
-                   }
-               }
-               else if (ChildNodes[j]->Type == Action &&
-           ChildNodes[j]->ReadState() != Idle)
-               {
-                   // 3.3.3) if it's a action node that has finished its job:
-                   // 3.3.3.1) ticking it without saving its returning state;
-                   ChildNodes[j]->Semaphore.Signal();
-               }
-           }*/
-
           if (ChildStates[i] == Failure)
           {
               HaltChildren(i + 1);
@@ -171,58 +119,6 @@ void SequenceNode::Exec() {
     } else {
       // If it was halted, all the "busy" children must be halted too
       std::cout << Name << " halted! Halting all the children..." << std::endl;
-      /*
-                  for(unsigned int j=0; j<M; j++)
-                  {
-                      if (ChildNodes[j]->Type != Action && ChildStates[j] ==
-         Running)
-                      {
-                          // if the control node was running:
-                          // halting it;
-                          ChildNodes[j]->Halt();
-
-                          // sync with it (it's waiting on the semaphore);
-                          ChildNodes[j]->Semaphore.Signal();
-
-                          std::cout << Name << " halting child number " << j <<
-         "!" << std::endl;
-                      }
-                      else if (ChildNodes[j]->Type == Action &&
-         ChildNodes[j]->ReadState() == Running)
-                      {
-                          std::cout << Name << " trying halting child number "
-         << j << "..." << std::endl;
-
-                          // if it's a action node that hasn't finished its job:
-                          // trying to halt it:
-                          if (ChildNodes[j]->Halt() == false)
-                          {
-                              // this means that, before this node could set its
-         child state
-                              // to "Halted", the child had already written the
-         action outcome;
-                              // sync with him ignoring its state;
-                              ChildNodes[j]->Semaphore.Signal();
-
-                              std::cout << Name << " halting of child number "
-         << j << " failed!" << std::endl;
-                          }
-
-                          std::cout << Name << " halting of child number " << j
-         << " succedeed!" << std::endl;
-                      }
-                      else if (ChildNodes[j]->Type == Action &&
-         ChildNodes[j]->ReadState() != Idle)
-                      {
-                          // if it's a action node that has finished its job:
-                          // ticking it without saving its returning state;
-                          ChildNodes[j]->Semaphore.Signal();
-                      }
-
-                      // updating its vector cell
-                      ChildStates[j] = Idle;
-                  }
-      */
       HaltChildren(0);
       // Resetting the node state
       WriteState(Idle);
