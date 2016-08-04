@@ -2,6 +2,11 @@
 
 using namespace BT;
 ControlNode *tree;
+const float NODE_WIDTH = 0.03;
+const float NODE_HEIGHT = 0.02;
+const float WORD_OFFSET = 0.02;
+const float CHAR_DIM = 0.0075;
+const int MAX_STRING_CHAR = 8;
 
 void drawString(void *font, char *s, float x, float y, float z) {
   unsigned int i;
@@ -21,51 +26,72 @@ void renderBitmapString(float x, float y, void *font, const char *string) {
   }
 }
 
+void drawBox(float x, float y, float width, float height)
+{
+	glBegin(GL_LINE_LOOP);
+	glVertex3f((GLfloat)(x + width), (GLfloat)(y - height), (GLfloat)0.0);
+  	glVertex3f((GLfloat)(x + width), (GLfloat)(y + height), (GLfloat)0.0);
+	glVertex3f((GLfloat)(x - width), (GLfloat)(y + height), (GLfloat)0.0);
+	glVertex3f((GLfloat)(x - width), (GLfloat)(y - height), (GLfloat)0.0);
+	glColor3f(0.0, 0.0, 0.0);
+	glEnd();
+}
+
 void draw_node(float x, float y, int node_type, const char *leafName,
                int status) {
   void *font = GLUT_BITMAP_8_BY_13;
 
-  float NODE_WIDTH = 0.03;
-  float NODE_HEIGHT = 0.02;
-
-  std::string st(leafName, 0, 6);
+  std::string st(leafName, 0, MAX_STRING_CHAR);
 
   switch (node_type) {
   case BT::SELECTORSTAR:
     drawString(font, "?*", (x + NODE_WIDTH - 0.035), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
   case BT::SEQUENCESTAR:
     drawString(font, ">*", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
 
   case BT::SELECTOR:
     drawString(font, "?", (x + NODE_WIDTH - 0.025), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
   case BT::SEQUENCE:
     drawString(font, ">", (x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
   case BT::PARALLEL:
     drawString(font, "=", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
   case BT::DECORATOR:
     drawString(font, "D", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
+	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
     break;
-  case BT::ACTION: {
-    NODE_WIDTH = 0.02;
-    for (unsigned int i = 0; i < st.size(); i++)
-      NODE_WIDTH += 0.01;
-  }
-    renderBitmapString((x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), font,
+  case BT::ACTION: 
+	{
+		float action_width = NODE_WIDTH;
+		for (int i = 0; i < st.size(); i++)
+		  action_width += CHAR_DIM;
+	
+		renderBitmapString((x - action_width + WORD_OFFSET), (y - NODE_HEIGHT / 2), font,
                        st.c_str());
+		drawBox(x, y, action_width, NODE_HEIGHT);
+	}
     glColor3f(0.2, 1.0, 0.2);
     break;
-  case BT::CONDITION: {
-    NODE_WIDTH = 0.02;
-    for (unsigned int i = 0; i < st.size(); i++)
-      NODE_WIDTH += 0.01;
-  }
-    renderBitmapString((x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), font,
+  case BT::CONDITION: 
+	{
+		float condition_width = NODE_WIDTH;
+		for (int i = 0; i < st.size(); i++)
+		  condition_width += CHAR_DIM;
+  
+		renderBitmapString((x - condition_width + WORD_OFFSET), (y - NODE_HEIGHT / 2), font,
                        st.c_str());
+		
+		drawBox(x, y, condition_width, NODE_HEIGHT);
+	}
     break;
   default:
     break;
@@ -88,17 +114,6 @@ void draw_node(float x, float y, int node_type, const char *leafName,
     break;
   }
 
-  glBegin(GL_LINE_LOOP);
-  glVertex3f((GLfloat)(x + NODE_WIDTH), (GLfloat)(y - NODE_HEIGHT),
-             (GLfloat)0.0);
-  glVertex3f((GLfloat)(x + NODE_WIDTH), (GLfloat)(y + NODE_HEIGHT),
-             (GLfloat)0.0);
-  glVertex3f((GLfloat)(x - NODE_WIDTH), (GLfloat)(y + NODE_HEIGHT),
-             (GLfloat)0.0);
-  glVertex3f((GLfloat)(x - NODE_WIDTH), (GLfloat)(y - NODE_HEIGHT),
-             (GLfloat)0.0);
-  glColor3f(0.0, 0.0, 0.0);
-  glEnd();
 }
 
 // draw the edge connecting one node to the other
@@ -179,7 +194,7 @@ void display() {
 
 void processSpecialKeys(int key, int xx, int yy) {
 
-  float fraction = 0.1f;
+  float fraction = 0.005f;
 
   switch (key) {
   case GLUT_KEY_UP:
@@ -198,7 +213,7 @@ void processSpecialKeys(int key, int xx, int yy) {
     x_offset += fraction;
     break;
   case GLUT_KEY_PAGE_DOWN:
-    if (x_offset > 0.1 + fraction)
+    if (x_offset > fraction)
       x_offset -= fraction; // Avoid negative offset
     break;
   case GLUT_KEY_F1:
