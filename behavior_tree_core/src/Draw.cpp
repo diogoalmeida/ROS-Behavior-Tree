@@ -40,58 +40,45 @@ void drawBox(float x, float y, float width, float height)
 void draw_node(float x, float y, int node_type, const char *leafName,
                int status) {
   void *font = GLUT_BITMAP_8_BY_13;
+  float width = NODE_WIDTH, height = NODE_HEIGHT;
 
   std::string st(leafName, 0, MAX_STRING_CHAR);
 
   switch (node_type) {
   case BT::SELECTORSTAR:
-    drawString(font, "?*", (x + NODE_WIDTH - 0.035), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, "?*", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
   case BT::SEQUENCESTAR:
-    drawString(font, ">*", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, ">*", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
 
   case BT::SELECTOR:
-    drawString(font, "?", (x + NODE_WIDTH - 0.025), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, "?", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
   case BT::SEQUENCE:
-    drawString(font, ">", (x - NODE_WIDTH + 0.015), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, ">", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
   case BT::PARALLEL:
-    drawString(font, "=", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, "=", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
   case BT::DECORATOR:
-    drawString(font, "D", (x - NODE_WIDTH + 0.01), (y - NODE_HEIGHT / 2), 0);
-	drawBox(x, y, NODE_WIDTH, NODE_HEIGHT);
+    drawString(font, "D", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
   case BT::ACTION: 
-	{
-		float action_width = NODE_WIDTH;
-		for (int i = 0; i < st.size(); i++)
-		  action_width += CHAR_DIM;
-	
-		renderBitmapString((x - action_width + WORD_OFFSET), (y - NODE_HEIGHT / 2), font,
-                       st.c_str());
-		drawBox(x, y, action_width, NODE_HEIGHT);
-	}
+	for (int i = 0; i < st.size(); i++)
+	  width += CHAR_DIM;
+
+	renderBitmapString((x - width + WORD_OFFSET), (y - height / 2), font,
+				   st.c_str());
     glColor3f(0.2, 1.0, 0.2);
     break;
   case BT::CONDITION: 
-	{
-		float condition_width = NODE_WIDTH;
-		for (int i = 0; i < st.size(); i++)
-		  condition_width += CHAR_DIM;
-  
-		renderBitmapString((x - condition_width + WORD_OFFSET), (y - NODE_HEIGHT / 2), font,
-                       st.c_str());
-		
-		drawBox(x, y, condition_width, NODE_HEIGHT);
-	}
+	for (int i = 0; i < st.size(); i++)
+	  width += CHAR_DIM;
+
+	renderBitmapString((x - width + WORD_OFFSET), (y - height / 2), font,
+				   st.c_str());
+	
     break;
   default:
     break;
@@ -113,6 +100,8 @@ void draw_node(float x, float y, int node_type, const char *leafName,
   default:
     break;
   }
+
+  drawBox(x, y, width, height);
 
 }
 
