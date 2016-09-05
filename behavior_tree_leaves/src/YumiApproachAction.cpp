@@ -5,17 +5,26 @@ void ApproachAction::executeCB(const behavior_tree_core::BTGoalConstPtr &goal)
     bool success;
     // publish info to the console for the user
     ROS_INFO("Starting Action");
-
     ROS_INFO("Executing Action");
     success = yumi_->approachObject(eef_, approach_target_);
 
-    if (success)
+    if (as_.isPreemptRequested())
     {
-        setStatus(SUCCESS);
+      ROS_INFO("Action Halted");
+
+      // set the action state to preempted
+      as_.setPreempted();
     }
     else
     {
-        setStatus(FAILURE);
+        if (success)
+        {
+            setStatus(SUCCESS);
+        }
+        else
+        {
+            setStatus(FAILURE);
+        }
     }
 }
 

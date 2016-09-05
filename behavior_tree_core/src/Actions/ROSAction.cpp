@@ -36,6 +36,7 @@ void ROSAction::Exec()
     {
         // Waiting for a tick to come
         Semaphore.Wait();
+        std::cout << Name << "got tick " << std::endl;
 
         if(ReadState() == Exit)
         {
@@ -72,7 +73,7 @@ void ROSAction::Exec()
             {
                 // meanwhile, my father halted me!
                 std::cout << Name << " Halted!" << std::endl;
-                ROS_INFO("I am cancelling the request");
+                ROS_INFO("I am cancelling the request 1");
                 ac.cancelGoal();
                 // Resetting the state
                 WriteState(Idle);
@@ -88,7 +89,7 @@ void ROSAction::Exec()
             {
                 // meanwhile, my father halted me!
                 std::cout << Name << " Halted!" << std::endl;
-                ROS_INFO("I am cancelling the request");
+                ROS_INFO("I am cancelling the request 2");
                 ac.cancelGoal();
                 // Resetting the state
                 WriteState(Idle);
@@ -99,13 +100,13 @@ void ROSAction::Exec()
         }else{//it means that the parent has halted the node
 
             std::cout << Name << " Halted!" << std::endl;
-            ROS_INFO("I am cancelling the request");
+            ROS_INFO("I am cancelling the request 3");
             ac.cancelGoal();
             // Resetting the state
             WriteState(Idle);
-            continue;
 
             std::cout << Name << " returning NOTHING (HALTED)" << Failure << "!" << std::endl;
+            continue;
         }
 
 

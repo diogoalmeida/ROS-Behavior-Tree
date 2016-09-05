@@ -5,6 +5,13 @@ void PickAction::executeCB(const behavior_tree_core::BTGoalConstPtr &goal)
     bool success;
     // publish info to the console for the user
     ROS_INFO("Starting Action");
+    if (as_.isPreemptRequested())
+    {
+      ROS_INFO("Action Halted");
+
+      // set the action state to preempted
+      as_.setPreempted();
+    }
 
     ROS_INFO("Executing Action");
     success = yumi_->pick(eef_, pick_target_);

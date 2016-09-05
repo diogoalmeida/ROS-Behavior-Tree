@@ -1,20 +1,9 @@
-#include <behavior_tree_leaves/YumiAssembleAction.h>
+#include <behavior_tree_leaves/YumiIsEefFreeCondition.h>
 
-void AssembleAction::executeCB(const behavior_tree_core::BTGoalConstPtr &goal)
+void IsEefFreeCondition::executeCB(const behavior_tree_core::BTGoalConstPtr &goal)
 {
     bool success;
-    // publish info to the console for the user
-    ROS_INFO("Starting Action");
-    if (as_.isPreemptRequested())
-    {
-      ROS_INFO("Action Halted");
-
-      // set the action state to preempted
-      as_.setPreempted();
-    }
-
-    ROS_INFO("Executing Action");
-    success = yumi_->assembleObjects(assemble_child_, assemble_parent_);
+    success = yumi_->isEefFree(eef_);
 
     if (success)
     {
@@ -26,7 +15,7 @@ void AssembleAction::executeCB(const behavior_tree_core::BTGoalConstPtr &goal)
     }
 }
 
-void AssembleAction::setStatus(int status){
+void IsEefFreeCondition::setStatus(int status){
   //Set The feedback and result of BT.action
   feedback_.status = status;
   result_.status = feedback_.status;

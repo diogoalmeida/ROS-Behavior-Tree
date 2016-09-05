@@ -89,8 +89,46 @@ add_library(YumiTransferAction src/YumiTransferAction.cpp)
 target_link_libraries(YumiTransferAction ${catkin_LIBRARIES})
 add_dependencies(YumiTransferAction ${catkin_EXPORTED_TARGETS})
 
+add_library(YumiIsXInEefCondition src/YumiIsXInEefCondition.cpp)
+target_link_libraries(YumiIsXInEefCondition ${catkin_LIBRARIES})
+add_dependencies(YumiIsXInEefCondition ${catkin_EXPORTED_TARGETS})
+
+add_library(YumiCanEefAssembleCondition src/YumiCanEefAssembleCondition.cpp)
+target_link_libraries(YumiCanEefAssembleCondition ${catkin_LIBRARIES})
+add_dependencies(YumiCanEefAssembleCondition ${catkin_EXPORTED_TARGETS})
+
+add_library(YumiCanEefReachXCondition src/YumiCanEefReachXCondition.cpp)
+target_link_libraries(YumiCanEefReachXCondition ${catkin_LIBRARIES})
+add_dependencies(YumiCanEefReachXCondition ${catkin_EXPORTED_TARGETS})
+
+add_library(YumiIsEefCloseToXCondition src/YumiIsEefCloseToXCondition.cpp)
+target_link_libraries(YumiIsEefCloseToXCondition ${catkin_LIBRARIES})
+add_dependencies(YumiIsEefCloseToXCondition ${catkin_EXPORTED_TARGETS})
+
+add_library(YumiAreEefCloseCondition src/YumiAreEefCloseCondition.cpp)
+target_link_libraries(YumiAreEefCloseCondition ${catkin_LIBRARIES})
+add_dependencies(YumiAreEefCloseCondition ${catkin_EXPORTED_TARGETS})
+
+add_library(YumiIsEefFreeCondition src/YumiIsEefFreeCondition.cpp)
+target_link_libraries(YumiIsEefFreeCondition ${catkin_LIBRARIES})
+add_dependencies(YumiIsEefFreeCondition ${catkin_EXPORTED_TARGETS})
+
+set(YumiActionImplementations
+"YumiApproachAction"
+"YumiPickAction"
+"YumiAssembleAction"
+"YumiPlaceAction"
+"YumiTransferAction"
+"YumiIsXInEefCondition"
+"YumiCanEefAssembleCondition"
+"YumiCanEefReachXCondition"
+"YumiIsEefCloseToXCondition"
+"YumiAreEefCloseCondition"
+"YumiIsEefFreeCondition"
+)
+
 add_executable(YumiActions src/YumiActions.cpp)
-target_link_libraries(YumiActions YumiApproachAction YumiPickAction YumiAssembleAction YumiPlaceAction YumiTransferAction ${catkin_LIBRARIES})
+target_link_libraries(YumiActions ${YumiActionImplementations} ${catkin_LIBRARIES})
 add_dependencies(YumiActions ${catkin_EXPORTED_TARGETS})
 
 add_executable(ConditionExample src/ConditionExample.cpp)
