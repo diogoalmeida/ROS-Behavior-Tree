@@ -8,7 +8,12 @@ SelectorStarNode::SelectorStarNode(std::string Name)
   Thread = boost::thread(&SelectorStarNode::Exec, this);
 }
 
-SelectorStarNode::~SelectorStarNode() {}
+SelectorStarNode::~SelectorStarNode()
+{
+  std::cout << Name << " is being destroyed" << std::endl;
+  Thread.interrupt();
+  Thread.join();
+}
 
 void SelectorStarNode::Exec() {
   unsigned int i;
@@ -35,7 +40,7 @@ void SelectorStarNode::Exec() {
     // Checking if i was halted
     if (ReadState() != Halted) {
       // If not, the children can be ticked
-      std::cout << Name << " ticked, ticking children..." << std::endl;
+      // std::cout << Name << " ticked, ticking children..." << std::endl;
 
       // For each child:
       while (i < M) {
@@ -85,8 +90,8 @@ void SelectorStarNode::Exec() {
                    // reinitialized
           }
           // 3.3) all the next action or control child nodes must be halted:
-          std::cout << Name << " returning " << ChildStates[i] << "!"
-                    << std::endl;
+          // std::cout << Name << " returning " << ChildStates[i] << "!"
+          //           << std::endl;
 
           // 3.4) the while loop must end here.
           break;
@@ -106,7 +111,7 @@ void SelectorStarNode::Exec() {
         // 4.2) resetting the state;
         WriteState(Idle);
 
-        std::cout << Name << " returning " << Success << "!" << std::endl;
+        // std::cout << Name << " returning " << Success << "!" << std::endl;
       }
     } else {
       // If it was halted, all the "busy" children must be halted too

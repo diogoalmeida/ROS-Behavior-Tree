@@ -64,7 +64,7 @@ void draw_node(float x, float y, int node_type, const char *leafName,
   case BT::DECORATOR:
     drawString(font, "D", (x - width + WORD_OFFSET), (y - height / 2), 0);
     break;
-  case BT::ACTION: 
+  case BT::ACTION:
 	for (int i = 0; i < st.size(); i++)
 	  width += CHAR_DIM;
 
@@ -72,13 +72,13 @@ void draw_node(float x, float y, int node_type, const char *leafName,
 				   st.c_str());
     glColor3f(0.2, 1.0, 0.2);
     break;
-  case BT::CONDITION: 
+  case BT::CONDITION:
 	for (int i = 0; i < st.size(); i++)
 	  width += CHAR_DIM;
 
 	renderBitmapString((x - width + WORD_OFFSET), (y - height / 2), font,
 				   st.c_str());
-	
+
     break;
   default:
     break;
@@ -234,24 +234,24 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 void drawTree(ControlNode *tree_) {
   //***************************BT VISUALIZATION****************************
-  int argc = 1;
-  char *argv[1] = {(char *)"Something"};
-  glutInit(&argc, argv); // Initialize GLUT
+  // int argc = 1;
+  // char *argv[1] = {(char *)"Something"};
+  // glutInit(&argc, argv); // Initialize GLUT
+  //
+  // tree = tree_;
+  // depth = tree->GetDepth();
+  //
+  // glutInitWindowSize(1024, 1024);
+  //
+  // glutCreateWindow("Behavior Tree"); // Create a window
+  // glutReshapeFunc(resize);
+  // glClearColor(0, 0.71, 0.00, 0.1);
+  // glutDisplayFunc(display); // Register display callback
+  //
+  // glutKeyboardFunc(keyboard);          // Register keyboard callback
+  // glutSpecialFunc(processSpecialKeys); // Register keyboard arrow callback
 
-  tree = tree_;
-  depth = tree->GetDepth();
-
-  glutInitWindowSize(1024, 1024);
-
-  glutCreateWindow("Behavior Tree"); // Create a window
-  glutReshapeFunc(resize);
-  glClearColor(0, 0.71, 0.00, 0.1);
-  glutDisplayFunc(display); // Register display callback
-
-  glutKeyboardFunc(keyboard);          // Register keyboard callback
-  glutSpecialFunc(processSpecialKeys); // Register keyboard arrow callback
-
-  glutMainLoop(); // Enter main event loop
+  // glutMainLoop(); // Enter main event loop
 
   //***************************ENDOF BT VISUALIZATION
   //****************************

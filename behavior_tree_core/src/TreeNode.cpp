@@ -19,6 +19,14 @@ void TreeNode::AddChild(TreeNode *Child) {
   throw std::logic_error(error_msg);
 }
 
+void TreeNode::DestroyChildren()
+{
+  std::string error_msg;
+
+  error_msg = "Called method <DestroyChildren> from a BT node (" + Name + ") that is a lead node!";
+  throw std::logic_error(error_msg);
+}
+
 NodeState TreeNode::GetNodeState() {
   NodeState ReadState;
   // Lock acquistion

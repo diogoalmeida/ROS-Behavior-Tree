@@ -13,7 +13,12 @@ ROSAction::ROSAction(std::string Name) : ActionNode::ActionNode(Name) {
   Thread = boost::thread(&ROSAction::Exec, this);
 }
 
-ROSAction::~ROSAction() {}
+ROSAction::~ROSAction()
+{
+  std::cout << Name << " is being destroyed" << std::endl;
+  Thread.interrupt();
+  Thread.join();
+}
 
 void ROSAction::Exec() {
 

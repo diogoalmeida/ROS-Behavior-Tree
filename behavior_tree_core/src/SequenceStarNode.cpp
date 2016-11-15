@@ -8,7 +8,12 @@ SequenceStarNode::SequenceStarNode(std::string Name)
   Thread = boost::thread(&SequenceStarNode::Exec, this);
 }
 
-SequenceStarNode::~SequenceStarNode() {}
+SequenceStarNode::~SequenceStarNode()
+{
+  std::cout << Name << " is being destroyed" << std::endl;
+  Thread.interrupt();
+  Thread.join();
+}
 
 void SequenceStarNode::Exec() {
   unsigned int i;
@@ -36,7 +41,7 @@ void SequenceStarNode::Exec() {
     // Checking if i was halted
     if (ReadState() != Halted) {
       // If not, the children can be ticked
-      std::cout << Name << " ticked, ticking children..." << std::endl;
+      // std::cout << Name << " ticked, ticking children..." << std::endl;
 
       // For each child:
       while (i < M) {
@@ -85,8 +90,8 @@ void SequenceStarNode::Exec() {
                    // reinitialized
           }
 
-          std::cout << Name << " returning " << ChildStates[i] << "!"
-                    << std::endl;
+          // std::cout << Name << " returning " << ChildStates[i] << "!"
+          //           << std::endl;
 
           // 3.4) the "for" loop must end here.
           break;
@@ -96,7 +101,7 @@ void SequenceStarNode::Exec() {
         {
           i++;
 
-          std::cout << Name << " can now tick the next children :) " << std::endl;
+          // std::cout << Name << " can now tick the next children :) " << std::endl;
         }
       }
 
@@ -110,12 +115,12 @@ void SequenceStarNode::Exec() {
         // 4.2) resetting the state;
         WriteState(Idle);
 
-        std::cout << Name << " returning " << Success << "!" << std::endl;
+        // std::cout << Name << " returning " << Success << "!" << std::endl;
       }
 
     } else {
       // If it was halted, all the "busy" children must be halted too
-      std::cout << Name << " halted! Halting all the children..." << std::endl;
+      // std::cout << Name << " halted! Halting all the children..." << std::endl;
       HaltChildren(0);
       // Resetting the node state
       WriteState(Idle);

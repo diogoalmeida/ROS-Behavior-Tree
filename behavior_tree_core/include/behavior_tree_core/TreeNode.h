@@ -92,7 +92,7 @@ public:
 
   // The constructor and the distructor
   TreeNode(std::string Name);
-  ~TreeNode();
+  virtual ~TreeNode();
 
   // The method that is going to be executed by the thread
   virtual void Exec() = 0;
@@ -102,6 +102,9 @@ public:
 
   // The method used to fill the child vector
   virtual void AddChild(TreeNode *Child);
+
+  // Method for destroying children
+  virtual void DestroyChildren();
 
   // The method that retrive the state of the node
   // (conditional waiting and mutual access)

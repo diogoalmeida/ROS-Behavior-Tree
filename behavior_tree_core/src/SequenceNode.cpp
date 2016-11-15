@@ -7,7 +7,12 @@ SequenceNode::SequenceNode(std::string Name) : ControlNode::ControlNode(Name) {
   Thread = boost::thread(&SequenceNode::Exec, this);
 }
 
-SequenceNode::~SequenceNode() {}
+SequenceNode::~SequenceNode()
+{
+  std::cout << Name << " is being destroyed" << std::endl;
+  Thread.interrupt();
+  Thread.join();
+}
 
 void SequenceNode::Exec() {
   unsigned int i;
@@ -17,7 +22,7 @@ void SequenceNode::Exec() {
 
   // Vector size initialization
   M = ChildNodes.size();
-  std::cout << Name << " has " << M << " children" << std::endl;
+  // std::cout << Name << " has " << M << " children" << std::endl;
 
   // Simulating a tick for myself
   Semaphore.Signal();
@@ -34,21 +39,21 @@ void SequenceNode::Exec() {
     // Checking if i was halted
     if (ReadState() != Halted) {
       // If not, the children can be ticked
-      std::cout << Name << " ticked, ticking children..." << std::endl;
+      // std::cout << Name << " ticked, ticking children..." << std::endl;
 
       // For each child:
       for (i = 0; i < M; i++) {
         if (ChildNodes[i]->Type == Action) {
           // 1) if it's an action:
           // 1.1) read its state;
-          std::cout << "Reading child " << ChildNodes[i]->Name << std::endl;
+          // std::cout << "Reading child " << ChildNodes[i]->Name << std::endl;
           NodeState ActionState = ChildNodes[i]->ReadState();
 
           if (ActionState == Idle) {
             // 1.2) if it's "Idle":
             // 1.2.1) ticking it;
-            std::cout << "Child " << ChildNodes[i]->Name << " is Idle"
-                      << std::endl;
+            // std::cout << "Child " << ChildNodes[i]->Name << " is Idle"
+            //           << std::endl;
             ChildNodes[i]->Semaphore.Signal();
 
             // 1.2.2) retrieve its state as soon as it is available;
@@ -57,18 +62,18 @@ void SequenceNode::Exec() {
             // 1.3) if it's "Running":
             // 1.3.1) saving "Running"
             ChildStates[i] = Running;
-            std::cout << "Child " << ChildNodes[i]->Name << " returned RUNNING"
-                      << std::endl;
+            // std::cout << "Child " << ChildNodes[i]->Name << " returned RUNNING"
+            //           << std::endl;
           } else {
             // 1.4) if it's "Success" of "Failure" (it can't be "Halted"!):
             // 1.2.1) ticking it;
 
             if (ActionState == Success) {
-              std::cout << "Child " << ChildNodes[i]->Name
-                        << " returned SUCCESS" << std::endl;
+              // std::cout << "Child " << ChildNodes[i]->Name
+              //           << " returned SUCCESS" << std::endl;
             } else if (ActionState == Failure) {
-              std::cout << "Child " << ChildNodes[i]->Name
-                        << " returned FAILURE" << std::endl;
+              // std::cout << "Child " << ChildNodes[i]->Name
+              //           << " returned FAILURE" << std::endl;
             }
 
             ChildNodes[i]->Semaphore.Signal();
@@ -79,7 +84,7 @@ void SequenceNode::Exec() {
         } else {
           // 2) if it's not an action:
           // 2.1) ticking it;
-          std::cout << Name << " Ticking a control node!" << std::endl;
+          // std::cout << Name << " Ticking a control node!" << std::endl;
           ChildNodes[i]->Semaphore.Signal();
 
           // 2.2) retrive its state as soon as it is available;
@@ -95,12 +100,8 @@ void SequenceNode::Exec() {
           WriteState(Idle);
 
           // 3.3) all the next action or control child nodes must be halted:
-          if (ChildStates[i] == Failure)
-          {
-              HaltChildren(i + 1);
+          HaltChildren(i + 1);
 
-              std::cout << Name << " had a child failure! returning Idle!" << std::endl;
-          }
           // 3.4) the "for" loop must end here.
           break;
         }
@@ -114,7 +115,7 @@ void SequenceNode::Exec() {
         // 4.2) resetting the state;
         WriteState(Idle);
 
-        std::cout << Name << " returning Success!" << std::endl;
+        // std::cout << Name << " returning Success!" << std::endl;
       }
     } else {
       // If it was halted, all the "busy" children must be halted too

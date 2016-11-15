@@ -6,7 +6,10 @@ ControlNode::ControlNode(std::string Name) : TreeNode::TreeNode(Name) {
   Type = Control;
 }
 
-ControlNode::~ControlNode() {}
+ControlNode::~ControlNode()
+{
+  DestroyChildren();
+}
 
 void ControlNode::AddChild(TreeNode *Child) {
   // Checking if the Child is not already present
@@ -101,4 +104,29 @@ int ControlNode::GetDepth() {
     }
   }
   return 1 + depMax;
+}
+
+/*
+  Recursively delete child nodes
+*/
+void ControlNode::DestroyChildren()
+{
+  std::cout << Name << " is destroying children" << std::endl;
+  for (int i = 0; i < ChildNodes.size(); i++)
+  {
+    if (ChildNodes[i]->Type != Control)
+    {
+      std::cout << "Destroying " << ChildNodes[i]->Name << std::endl;
+      delete ChildNodes[i];
+    }
+    else
+    {
+      ChildNodes[i]->DestroyChildren();
+      std::cout << "Destroying " << ChildNodes[i]->Name << std::endl;
+      delete ChildNodes[i];
+    }
+  }
+
+  ChildNodes.clear();
+  ChildStates.clear();
 }

@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h> // needed for actionlib
 #include <behavior_tree_core/BTAction.h>
+#include <boost/thread.hpp>
 
 #ifndef __BT_STATUS__
 #define __BT_STATUS__
@@ -17,6 +18,7 @@ protected:
   behavior_tree_core::BTFeedback feedback_;
   behavior_tree_core::BTResult result_;
   double execution_frequency_;
+  boost::mutex action_mtx_;
 
 public:
   ActionTemplate(std::string name)
@@ -41,8 +43,8 @@ public:
 
   // Code to execute if action gets preempted
   virtual void preemptionRoutine() = 0;
-  // Code to be run under normal execution. Should return 1 for SUCCESS or -1
-  // for FAILURE
+  // Code to be run under normal execution. Should set sucess_ to 1 for
+  // SUCCESS, -1 for FAILURE.
   virtual int executionRoutine() = 0;
 };
 #endif

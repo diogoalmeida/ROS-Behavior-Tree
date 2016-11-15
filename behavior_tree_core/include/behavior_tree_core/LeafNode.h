@@ -10,7 +10,7 @@ class LeafNode : public TreeNode {
 protected:
 public:
   LeafNode(std::string Name);
-  ~LeafNode();
+  virtual ~LeafNode();
   void ResetColorState();
   int GetDepth();
 };

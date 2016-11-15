@@ -20,7 +20,7 @@ protected:
 public:
   // Constructor
   ControlNode(std::string Name);
-  ~ControlNode();
+  virtual ~ControlNode();
 
   // The method used to fill the child vector
   void AddChild(TreeNode *Child);
@@ -37,6 +37,7 @@ public:
   // Methods used to access the node state without the
   // conditional waiting (only mutual access)
   bool WriteState(NodeState StateToBeSet);
+  void DestroyChildren();
 };
 }
 
