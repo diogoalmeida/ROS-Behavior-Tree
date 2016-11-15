@@ -34,6 +34,9 @@ void keyboard(unsigned char key, int x, int y);
 
 void drawCircle(float radius);
 
+void enableDrawing();
+void disableDrawing();
+
 // void display();
 
 #endif // DRAWTREE_H

@@ -7,6 +7,7 @@ const float NODE_HEIGHT = 0.02;
 const float WORD_OFFSET = 0.02;
 const float CHAR_DIM = 0.0075;
 const int MAX_STRING_CHAR = 8;
+bool draw = false;
 
 void drawString(void *font, char *s, float x, float y, float z) {
   unsigned int i;
@@ -171,14 +172,16 @@ void updateTree(TreeNode *tree, GLfloat x_pos, GLfloat y_pos, GLfloat x_offset,
 }
 
 void display() {
+  if (draw)
+  {
+    glClearColor(r_color, g_color, b_color, 0.1);
 
-  glClearColor(r_color, g_color, b_color, 0.1);
-
-  // clear the draw buffer .
-  glClear(GL_COLOR_BUFFER_BIT); // Erase everything
-  updateTree(tree, x, y, x_offset * pow(4, depth - 1), 0.1);
-  glutSwapBuffers();
-  glutPostRedisplay();
+    // clear the draw buffer .
+    glClear(GL_COLOR_BUFFER_BIT); // Erase everything
+    updateTree(tree, x, y, x_offset * pow(4, depth - 1), 0.1);
+    glutSwapBuffers();
+    glutPostRedisplay();
+  }
 }
 
 void processSpecialKeys(int key, int xx, int yy) {
@@ -234,25 +237,35 @@ void processSpecialKeys(int key, int xx, int yy) {
 
 void drawTree(ControlNode *tree_) {
   //***************************BT VISUALIZATION****************************
-  // int argc = 1;
-  // char *argv[1] = {(char *)"Something"};
-  // glutInit(&argc, argv); // Initialize GLUT
-  //
-  // tree = tree_;
-  // depth = tree->GetDepth();
-  //
-  // glutInitWindowSize(1024, 1024);
-  //
-  // glutCreateWindow("Behavior Tree"); // Create a window
-  // glutReshapeFunc(resize);
-  // glClearColor(0, 0.71, 0.00, 0.1);
-  // glutDisplayFunc(display); // Register display callback
-  //
-  // glutKeyboardFunc(keyboard);          // Register keyboard callback
-  // glutSpecialFunc(processSpecialKeys); // Register keyboard arrow callback
+  int argc = 1;
+  char *argv[1] = {(char *)"Something"};
+  glutInit(&argc, argv); // Initialize GLUT
 
-  // glutMainLoop(); // Enter main event loop
+  tree = tree_;
+  depth = tree->GetDepth();
+
+  glutInitWindowSize(1024, 1024);
+
+  glutCreateWindow("Behavior Tree"); // Create a window
+  glutReshapeFunc(resize);
+  glClearColor(0, 0.71, 0.00, 0.1);
+  glutDisplayFunc(display); // Register display callback
+
+  glutKeyboardFunc(keyboard);          // Register keyboard callback
+  glutSpecialFunc(processSpecialKeys); // Register keyboard arrow callback
+
+  glutMainLoop(); // Enter main event loop
 
   //***************************ENDOF BT VISUALIZATION
   //****************************
+}
+
+void enableDrawing()
+{
+  draw = true;
+}
+
+void disableDrawing()
+{
+  draw = false;
 }
