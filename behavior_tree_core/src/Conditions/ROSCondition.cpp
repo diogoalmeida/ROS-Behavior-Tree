@@ -12,12 +12,7 @@ ROSCondition::ROSCondition(std::string Name)
   Thread = boost::thread(&ROSCondition::Exec, this);
 }
 
-ROSCondition::~ROSCondition()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+ROSCondition::~ROSCondition() {}
 
 void ROSCondition::Exec() {
 

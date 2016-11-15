@@ -7,12 +7,7 @@ SelectorNode::SelectorNode(std::string Name) : ControlNode::ControlNode(Name) {
   Thread = boost::thread(&SelectorNode::Exec, this);
 }
 
-SelectorNode::~SelectorNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+SelectorNode::~SelectorNode() {}
 
 void SelectorNode::Exec() {
   unsigned int i;

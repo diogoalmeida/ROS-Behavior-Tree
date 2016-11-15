@@ -9,7 +9,15 @@ TreeNode::TreeNode(std::string Name) : Semaphore(0) {
   State = Idle;
 }
 
-TreeNode::~TreeNode() {}
+TreeNode::~TreeNode()
+{
+  std::cout << Name << " is being destroyed" << std::endl;
+  if(Thread.joinable())
+  {
+    Thread.interrupt();
+    Thread.join();
+  }
+}
 
 void TreeNode::AddChild(TreeNode *Child) {
   std::string error_msg;

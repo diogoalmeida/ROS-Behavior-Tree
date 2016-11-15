@@ -28,6 +28,7 @@ void Execute(ControlNode *root, int TickPeriod_milliseconds) {
   {
     std::cout << "Terminating tree execution" << std::endl;
     root->HaltChildren(0);
+    boost::this_thread::sleep(boost::posix_time::milliseconds(1000)); // TODO: Make this deterministic
     root->DestroyChildren();
   }
 }

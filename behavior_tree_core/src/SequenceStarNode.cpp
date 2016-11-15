@@ -8,12 +8,7 @@ SequenceStarNode::SequenceStarNode(std::string Name)
   Thread = boost::thread(&SequenceStarNode::Exec, this);
 }
 
-SequenceStarNode::~SequenceStarNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+SequenceStarNode::~SequenceStarNode() {}
 
 void SequenceStarNode::Exec() {
   unsigned int i;

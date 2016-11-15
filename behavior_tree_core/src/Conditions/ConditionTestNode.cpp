@@ -10,12 +10,7 @@ ConditionTestNode::ConditionTestNode(std::string Name)
   Thread = boost::thread(&ConditionTestNode::Exec, this);
 }
 
-ConditionTestNode::~ConditionTestNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+ConditionTestNode::~ConditionTestNode() {}
 
 void ConditionTestNode::Exec() {
   int i = 0;

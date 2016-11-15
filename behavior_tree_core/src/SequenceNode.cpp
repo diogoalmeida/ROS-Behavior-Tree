@@ -7,13 +7,7 @@ SequenceNode::SequenceNode(std::string Name) : ControlNode::ControlNode(Name) {
   Thread = boost::thread(&SequenceNode::Exec, this);
 }
 
-SequenceNode::~SequenceNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
-
+SequenceNode::~SequenceNode() {}
 void SequenceNode::Exec() {
   unsigned int i;
 

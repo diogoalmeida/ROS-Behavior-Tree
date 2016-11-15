@@ -8,12 +8,7 @@ SelectorStarNode::SelectorStarNode(std::string Name)
   Thread = boost::thread(&SelectorStarNode::Exec, this);
 }
 
-SelectorStarNode::~SelectorStarNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+SelectorStarNode::~SelectorStarNode() {}
 
 void SelectorStarNode::Exec() {
   unsigned int i;

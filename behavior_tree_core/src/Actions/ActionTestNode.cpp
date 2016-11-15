@@ -9,12 +9,7 @@ ActionTestNode::ActionTestNode(std::string Name)
   Thread = boost::thread(&ActionTestNode::Exec, this);
 }
 
-ActionTestNode::~ActionTestNode()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
+ActionTestNode::~ActionTestNode() {}
 
 void ActionTestNode::Exec() {
 

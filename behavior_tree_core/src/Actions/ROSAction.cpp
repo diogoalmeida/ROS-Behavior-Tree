@@ -13,13 +13,7 @@ ROSAction::ROSAction(std::string Name) : ActionNode::ActionNode(Name) {
   Thread = boost::thread(&ROSAction::Exec, this);
 }
 
-ROSAction::~ROSAction()
-{
-  std::cout << Name << " is being destroyed" << std::endl;
-  Thread.interrupt();
-  Thread.join();
-}
-
+ROSAction::~ROSAction() {}
 void ROSAction::Exec() {
 
   // bool hasReturned = false;
@@ -92,8 +86,8 @@ void ROSAction::Exec() {
     } else { // it means that the parent has halted the node
 
       std::cout << Name << " Halted!" << std::endl;
-      //  ROS_INFO("I am cancelling the request");
-      ac.cancelGoal();
+      ROS_INFO("I am cancelling the request");
+      ac.cancelAllGoals();
       // Resetting the state
       WriteState(Idle);
       continue;
