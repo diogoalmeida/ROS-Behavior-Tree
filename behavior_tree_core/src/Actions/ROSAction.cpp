@@ -14,17 +14,22 @@ ROSAction::ROSAction(std::string Name) : ActionNode::ActionNode(Name) {
 }
 
 ROSAction::~ROSAction() {}
-void ROSAction::Exec() {
 
+void ROSAction::Exec() {
+  bool action_server_started = false;
   // bool hasReturned = false;
   // create the action client
   // true causes the client to spin its own thread
-  // ROS_INFO("Waiting For the Actuator %s to start", Name.c_str());
+  ROS_INFO("Waiting For the Actuator %s to start", Name.c_str());
 
   actionlib::SimpleActionClient<behavior_tree_core::BTAction> ac(Name, true);
 
-  ac.waitForServer(); // will wait for infinite time until the server starts
-  // ROS_INFO("The Actuator %s has started", Name.c_str());
+  action_server_started = ac.waitForServer(ros::Duration(2.0));
+
+  if (action_server_started)
+  {
+    ROS_INFO("The Actuator %s has started", Name.c_str());
+  }
 
   behavior_tree_core::BTGoal goal;
   node_result.status = RUNNING; //
@@ -43,10 +48,13 @@ void ROSAction::Exec() {
     node_result.status = RUNNING;
     // Perform action...
     // ROS_INFO("I am running the request to %s", Name.c_str());
-    ac.sendGoal(goal);
-    do {
-      node_result = *(ac.getResult()); // checking the result
-    } while (node_result.status == RUNNING && ReadState() == Running);
+    if (action_server_started)
+    {
+      ac.sendGoal(goal);
+      do {
+        node_result = *(ac.getResult()); // checking the result
+      } while (node_result.status == RUNNING && ReadState() == Running);
+    }
     // ROS_INFO("The Server Has Replied Or the node is halted");
 
     // std::cout << Name << " RETURNING " << node_result.status << "!"
@@ -57,43 +65,46 @@ void ROSAction::Exec() {
       return;
     }
 
-    if (node_result.status == SUCCESS) {
-      // trying to set the outcome state:
-      if (WriteState(Success) != true) {
-        // meanwhile, my father halted me!
+    if (action_server_started)
+    {
+      if (node_result.status == SUCCESS) {
+        // trying to set the outcome state:
+        if (WriteState(Success) != true) {
+          // meanwhile, my father halted me!
+          std::cout << Name << " Halted!" << std::endl;
+          // ROS_INFO("I am cancelling the request");
+          ac.cancelGoal();
+          // Resetting the state
+          WriteState(Idle);
+          continue;
+        }
+
+        std::cout << Name << " returning Success " << Success << "!" << std::endl;
+      } else if (node_result.status == FAILURE) {
+        // trying to set the outcome state:
+        if (WriteState(Failure) != true) {
+          // meanwhile, my father halted me!
+          std::cout << Name << " Halted!" << std::endl;
+          // ROS_INFO("I am cancelling the request");
+          ac.cancelGoal();
+          // Resetting the state
+          WriteState(Idle);
+          continue;
+        }
+
+        std::cout << Name << " returning Failure" << Failure << "!" << std::endl;
+      } else { // it means that the parent has halted the node
+
         std::cout << Name << " Halted!" << std::endl;
-        // ROS_INFO("I am cancelling the request");
-        ac.cancelGoal();
+        ROS_INFO("I am cancelling the request");
+        ac.cancelAllGoals();
         // Resetting the state
         WriteState(Idle);
         continue;
+
+        std::cout << Name << " returning NOTHING (HALTED)" << Failure << "!"
+                  << std::endl;
       }
-
-      std::cout << Name << " returning Success " << Success << "!" << std::endl;
-    } else if (node_result.status == FAILURE) {
-      // trying to set the outcome state:
-      if (WriteState(Failure) != true) {
-        // meanwhile, my father halted me!
-        std::cout << Name << " Halted!" << std::endl;
-        // ROS_INFO("I am cancelling the request");
-        ac.cancelGoal();
-        // Resetting the state
-        WriteState(Idle);
-        continue;
-      }
-
-      std::cout << Name << " returning Failure" << Failure << "!" << std::endl;
-    } else { // it means that the parent has halted the node
-
-      std::cout << Name << " Halted!" << std::endl;
-      ROS_INFO("I am cancelling the request");
-      ac.cancelAllGoals();
-      // Resetting the state
-      WriteState(Idle);
-      continue;
-
-      std::cout << Name << " returning NOTHING (HALTED)" << Failure << "!"
-                << std::endl;
     }
 
     std::cout << Name << " returning " << Success << "!" << std::endl;

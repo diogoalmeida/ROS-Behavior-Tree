@@ -17,6 +17,7 @@ TreeNode::~TreeNode()
     Thread.interrupt();
     Thread.join();
   }
+  std::cout << Name << " was destroyed successfully" << std::endl;
 }
 
 void TreeNode::AddChild(TreeNode *Child) {

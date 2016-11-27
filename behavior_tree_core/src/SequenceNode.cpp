@@ -8,6 +8,7 @@ SequenceNode::SequenceNode(std::string Name) : ControlNode::ControlNode(Name) {
 }
 
 SequenceNode::~SequenceNode() {}
+
 void SequenceNode::Exec() {
   unsigned int i;
 
