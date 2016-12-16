@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <name>behavior_tree_leaves</name>
-  <version>0.0.0</version>
+  <version>1.1.0</version>
   <description>The behavior_tree_actions package</description>
-  <maintainer email="michele.colledanchise@gmail.com">Michele Colledanchise</maintainer>
+  <maintainer email="diogoa@kth.se">Diogo Almeida</maintainer>
   <author>Michele Colledanchise</author>
   <license>MIT</license>
 

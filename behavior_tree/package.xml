@@ -1,9 +1,12 @@
 <package>
   <name>behavior_tree</name>
-  <version>1.0.0</version>
-  <description>A ROS behavior tree library. The leaf nodes (user defined) can be either in C++ or python</description>
+  <version>1.1.0</version>
+  <description>
+      ROS behavior tree library. The leaf nodes (user defined) can be either in C++ or python.
+      This version is adapted to the needs of the SARAFun EU project.
+  </description>
 
-  <maintainer email="michele.colledanchise@gmail.com">Michele Colledanchise</maintainer>
+  <maintainer email="diogoa@kth.se">Diogo Almeida</maintainer>
   <license>MIT</license>
   <author>Michele Colledanchise</author>
   <author>Rocco Santomo</author>

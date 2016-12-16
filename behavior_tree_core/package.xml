@@ -1,10 +1,10 @@
 <package>
   <name>behavior_tree_core</name>
-  <version>0.0.0</version>
+  <version>1.1.0</version>
   <description>
-  This package provides a behavior trees framework in ROS.
+    This package provides a behavior trees framework in ROS.
   </description>
-  <maintainer email="michele.colledanchise@gmail.com">Michele Colledanchise</maintainer>
+  <maintainer email="diogoa@kth.se">Diogo Almeida</maintainer>
   <license>MIT</license>
   <author>Michele Colledanchise</author>
 
