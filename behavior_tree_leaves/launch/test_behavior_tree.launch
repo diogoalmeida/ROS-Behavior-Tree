@@ -2,5 +2,5 @@
   <node name="A1" pkg="behavior_tree_leaves" type="ActionExample" />
   <node name="A2" pkg="behavior_tree_leaves" type="ActionExample" />
   <node name="C1" pkg="behavior_tree_leaves" type="ConditionExample" />
-  <node name="tree" pkg="behavior_tree_core" type="tree" />
+  <!-- <node name="tree" pkg="behavior_tree_core" type="tree" /> -->
 </launch>
