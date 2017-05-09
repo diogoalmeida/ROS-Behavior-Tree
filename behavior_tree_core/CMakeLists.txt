@@ -82,6 +82,7 @@ src/Actions/ROSAction.cpp
 src/Conditions/ConditionTestNode.cpp
 src/Conditions/ROSCondition.cpp
 src/BehaviorTree.cpp
+src/ROSLoaderNode.cpp
 )
 
 add_library(behavior_tree ${BTSrcLibrary} ${BTHeadLibrary})
