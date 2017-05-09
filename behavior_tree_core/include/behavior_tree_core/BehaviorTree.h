@@ -15,6 +15,7 @@
 #include <behavior_tree_core/Conditions/ConditionTestNode.h>
 #include <behavior_tree_core/Actions/ROSAction.h>
 #include <behavior_tree_core/Conditions/ROSCondition.h>
+#include <behavior_tree_core/ROSLoaderNode.h>
 
 #include <behavior_tree_core/Exceptions.h>
 

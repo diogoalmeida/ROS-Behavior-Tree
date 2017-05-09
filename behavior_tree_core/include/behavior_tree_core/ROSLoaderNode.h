@@ -12,7 +12,7 @@ public:
   ~ROSLoaderNode();
 
   // The method that is going to be executed by the thread
-  void Exec() = 0;
+  void Exec();
 
   // The method used to interrupt the execution of the node
   bool Halt();
