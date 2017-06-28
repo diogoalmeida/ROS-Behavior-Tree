@@ -202,9 +202,11 @@ void processSpecialKeys(int key, int xx, int yy) {
     x += fraction;
     break;
   case GLUT_KEY_PAGE_UP:
+    fraction = 0.0001f;
     x_offset += fraction;
     break;
   case GLUT_KEY_PAGE_DOWN:
+    fraction = 0.0001f;
     if (x_offset > fraction)
       x_offset -= fraction; // Avoid negative offset
     break;
