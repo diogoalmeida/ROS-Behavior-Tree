@@ -4,6 +4,7 @@ using namespace BT;
 
 ParallelNode::ParallelNode(std::string Name) : ControlNode::ControlNode(Name) {
   // Initializations
+  M = 0;
   N = std::numeric_limits<unsigned int>::max();
   StateUpdate = false;
 
@@ -15,16 +16,6 @@ ParallelNode::~ParallelNode() {}
 
 void ParallelNode::SetThreshold(unsigned int N) {
   // Vector size initialization
-  M = ChildNodes.size();
-
-  // Checking N correctness
-  if (N > M) {
-    std::stringstream S;
-    S << "Wrong N threshold for '" << Name << "'. M=" << M << " while N=" << N
-      << ". N should be <= M.";
-    throw BehaviorTreeException(S.str());
-  }
-
   this->N = N;
 
   // First tick for the thread
@@ -44,14 +35,33 @@ void ParallelNode::Exec() {
                                              "the node.");
   }
 
-  // Vector construction
-  for (i = 0; i < M; i++) {
-    ChildStatesUpdated.push_back(false);
-  }
-
   while (true) {
     // Waiting for a tick to come
     Semaphore.Wait();
+
+    if (M == 0) // set the number of children
+    {
+      ChildStatesUpdated.clear();
+      M = ChildNodes.size();
+
+      if (M == 0) // still no children
+      {
+        continue;
+      }
+
+      // Checking N correctness
+      if (N > M) {
+        std::stringstream S;
+        S << "Wrong N threshold for '" << Name << "'. M=" << M << " while N=" << N
+        << ". N should be <= M.";
+        throw BehaviorTreeException(S.str());
+      }
+
+      // Vector construction
+      for (i = 0; i < M; i++) {
+        ChildStatesUpdated.push_back(false);
+      }
+    }
 
     if (ReadState() == Exit) {
       // The behavior tree is going to be destroied
