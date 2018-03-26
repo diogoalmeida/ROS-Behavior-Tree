@@ -25,6 +25,11 @@ void ROSCondition::Exec() {
   {
     ROS_INFO("The Actuator %s has started", Name.c_str());
   }
+  else
+  {
+    ROS_FATAL("The Actuator %s failed to start", Name.c_str());
+    ros::shutdown();
+  }
 
   behavior_tree_core::BTGoal goal;
   while (true) {
