@@ -70,10 +70,6 @@ void ParallelNode::Exec() {
 
     // Variables reset
     StateUpdate = false;
-    Successes = Failures = Runnings = 0;
-    for (i = 0; i < M; i++) {
-      ChildStatesUpdated[i] = false;
-    }
 
     // Checking if i was halted
     if (ReadState() != Halted) {
@@ -104,6 +100,8 @@ void ParallelNode::Exec() {
           Runnings++;
           ChildStatesUpdated[i] = true;
         }
+
+        std::cout << "Successes: " << Successes << " Failures: " << Failures << " Runnings: " << Runnings << std::endl;
 
         if (Successes >= N) {
           // Returning success
@@ -201,6 +199,10 @@ void ParallelNode::Exec() {
           }
 
           // Next cicle
+          Successes = Failures = Runnings = 0;
+          for (i = 0; i < M; i++) {
+            ChildStatesUpdated[i] = false;
+          }
           continue;
         } else if (Runnings + Failures + Successes < M) {
           // Returning running! But some children haven't been ticked yet!
@@ -389,6 +391,10 @@ void ParallelNode::Exec() {
         }
 
         // Resetting the node state
+        Successes = Failures = Runnings = 0;
+          for (i = 0; i < M; i++) {
+            ChildStatesUpdated[i] = false;
+          }
         if (ReadState() != Halted) {
           WriteState(Idle);
         }
